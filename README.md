@@ -18,6 +18,11 @@ A 30-day engineering challenge to build a logistics optimization and ML predicti
 - **Features:** Trained on Distance, Traffic Density, and Weather Impact.
 - **Artifacts:** Exported trained model to `ml_model/logistics_model.pkl` for future inference.
 
+### 🔮 Day 6: Production Inference Engine
+- **Pipeline:** Built `predict_delivery.py` to leverage the saved model artifacts.
+- **Optimization:** Shifted from training-time complexity to production-ready $O(1)$ inference.
+- **Validation:** Resolved Pandas feature-name warnings by formalizing data layout inputs.
+
 ## 🛠️ How to Run
 1. Generate: `python scripts/data_generator.py`
 2. Clean: `python scripts/data_cleaning.py`
