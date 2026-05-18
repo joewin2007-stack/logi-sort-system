@@ -1,29 +1,12 @@
 # 🚛 Logi-Sort System
-A 30-day engineering challenge to build a logistics optimization and ML prediction system.
 
-## 📊 Current Project Status: **Day 5 Complete**
+The Logi-Sort System is a scalable logistics optimization and machine learning prediction platform built over an engineering sprint. The core architecture integrates an automated pipeline handling everything from workspace initialization and mock data generation to data profiling, feature engineering, and robust model validation.
 
-### 🏗️ Day 1-2: Data Infrastructure
-- **Git & MySQL:** Established repository structure and relational schema.
-- **Data Generation:** Built `data_generator.py` to simulate 5,000 trips with synthetic noise.
+The backend infrastructure leverages a high-performance REST API gateway built with FastAPI to manage real-time logistical telemetry validations against a local MySQL relational database layer. Incoming network payloads containing driver assignments and trip telemetry are securely processed, validated, and evaluated against relational schemas to ensure strict data integrity.
 
-### 🧹 Day 3-4: Data Engineering & Cleaning
-- **Pipeline:** Developed `data_cleaning.py` to bridge MySQL and Python/Pandas.
-- **Preprocessing:** Performed type conversion, outlier removal (speed filtering), and feature engineering (`avg_speed_kmh`).
-- **Persistence:** Generated `cleaned_trips.csv` for model training.
+## 🛠️ Execution & Deployment
 
-### 🧠 Day 5: Machine Learning Implementation
-- **Model:** Built a **Linear Regression** model using Scikit-Learn.
-- **Performance:** Achieved a **Mean Absolute Error (MAE) of 4.94 minutes**.
-- **Features:** Trained on Distance, Traffic Density, and Weather Impact.
-- **Artifacts:** Exported trained model to `ml_model/logistics_model.pkl` for future inference.
-
-### 🔮 Day 6: Production Inference Engine
-- **Pipeline:** Built `predict_delivery.py` to leverage the saved model artifacts.
-- **Optimization:** Shifted from training-time complexity to production-ready $O(1)$ inference.
-- **Validation:** Resolved Pandas feature-name warnings by formalizing data layout inputs.
-
-## 🛠️ How to Run
-1. Generate: `python scripts/data_generator.py`
-2. Clean: `python scripts/data_cleaning.py`
-3. Train: `python scripts/train_model.py`
+### System Dependencies
+Ensure your python virtual environment is activated, then install the core stack requirements:
+```bash
+pip install fastapi uvicorn mysql-connector-python pydantic
