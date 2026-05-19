@@ -61,3 +61,36 @@ def verify_and_log_trip(payload: TripPayload):
         if 'connection' in locals() and connection.is_connected():
             cursor.close()
             connection.close()
+
+@app.get("/api/v1/trips")
+def fetch_historical_trips(limit: int = 10):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        
+        # Integrating your database class theory straight into live code execution:
+        # We query the trips table and LEFT JOIN the drivers table on the driver_id key.
+        # This keeps the trip record intact even if the driver mapping is empty (NULL).
+        query = """
+            SELECT t.trip_id, t.distance_km, t.traffic_density, d.name AS driver_name 
+            FROM trips t
+            LEFT JOIN drivers d ON t.driver_id = d.driver_id
+            ORDER BY t.trip_id DESC
+            LIMIT %s
+        """
+        cursor.execute(query, (limit,))
+        records = cursor.fetchall()
+        
+        return {
+            "status": "success",
+            "count": len(records),
+            "data": records
+        }
+        
+    except mysql.connector.Error as err:
+        raise HTTPException(status_code=500, detail=f"Database relational query failure: {str(err)}")
+        
+    finally:
+        if 'connection' in locals() and connection.is_connected():
+            cursor.close()
+            connection.close()
