@@ -1,10 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 import mysql.connector
 from pydantic import BaseModel, Field
 import joblib
 import os
 
-app = FastAPI(title="Logi-Sort Production API Gateway - Day 12")
+app = FastAPI(title="Logi-Sort Resilient API Gateway - Day 13")
 
 # Centralized database configuration management
 DB_CONFIG = {
@@ -18,11 +18,19 @@ MODEL_PATH = os.path.join("ml_model", "delivery_model.pkl")
 model = None
 
 def get_db_connection():
-    return mysql.connector.connect(**DB_CONFIG)
+    """Attempts to establish a database channel; throws a clean operational error if MySQL is down."""
+    try:
+        return mysql.connector.connect(**DB_CONFIG)
+    except mysql.connector.Error as err:
+        # If MySQL is stopped or the password fails, raise a clean HTTP 503 Service Unavailable
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Database warehouse is completely offline or unreachable: {str(err)}"
+        )
 
 @app.on_event("startup")
 def startup_pipeline():
-    """Self-healing setup: Prepares the ML brain and initializes all relational tables."""
+    """Self-healing setup: Prepares the ML brain and attempts to initialize database layers."""
     global model
     
     # 1. Load the Machine Learning model if available
@@ -35,12 +43,11 @@ def startup_pipeline():
     except Exception as e:
         print(f"❌ Failed to load ML model: {str(e)}")
 
-    # 2. Automatically build and seed tables if they are missing
+    # 2. Resilient Database Initialization
     try:
-        connection = get_db_connection()
+        connection = mysql.connector.connect(**DB_CONFIG)
         cursor = connection.cursor()
         
-        # Build the missing drivers table automatically
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS drivers (
                 driver_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,7 +56,6 @@ def startup_pipeline():
             );
         """)
         
-        # Seed 3 sample driver records into the table
         cursor.execute("""
             INSERT INTO drivers (driver_id, name, vehicle_type) VALUES
             (1, 'Alex Johnson', 'Semi-Truck'),
@@ -58,8 +64,6 @@ def startup_pipeline():
             ON DUPLICATE KEY UPDATE name=name;
         """)
         
-        # Build the missing trips table automatically to store our live logs
-        # We include predicted_duration_minutes to capture our system's core output
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS trips (
                 trip_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,9 +79,9 @@ def startup_pipeline():
         connection.commit()
         cursor.close()
         connection.close()
-        print("🗄️ Success: Database tables (drivers, trips) initialized and verified.")
+        print("🗄️ Success: Database tables initialized and verified.")
     except mysql.connector.Error as db_err:
-        print(f"⚠️ Database auto-setup warning: {str(db_err)}")
+        print(f"⚠️ Resilient Startup Notice: Database couldn't auto-initialize. API will run, but database routes will report offline status. Error: {str(db_err)}")
 
 
 class TripPayload(BaseModel):
@@ -88,20 +92,33 @@ class TripPayload(BaseModel):
 
 @app.get("/api/v1/health")
 def check_health():
+    """Comprehensive health check checking both server runtime status and live database availability."""
+    db_alive = False
+    try:
+        conn = mysql.connector.connect(**DB_CONFIG)
+        if conn.is_connected():
+            db_alive = True
+            conn.close()
+    except:
+        db_alive = False
+
     return {
         "status": "healthy", 
+        "database_connected": db_alive,
         "model_loaded": model is not None,
-        "milestone": "Day 12 Database Write-Back Active"
+        "milestone": "Day 13 Production Resilience Standards Enforced"
     }
 
 
 @app.post("/api/v1/trips/verify")
 def verify_predict_and_log_trip(payload: TripPayload):
+    # This call safely checks if database is reachable before executing any logic
+    connection = get_db_connection()
+    cursor = None
     try:
-        connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
         
-        # 1. Secure parameterized validation against drivers table
+        # 1. Driver verification check
         driver_query = "SELECT * FROM drivers WHERE driver_id = %s"
         cursor.execute(driver_query, (payload.driver_id,))
         driver_record = cursor.fetchone()
@@ -109,7 +126,7 @@ def verify_predict_and_log_trip(payload: TripPayload):
         if not driver_record:
             raise HTTPException(status_code=404, detail=f"Driver ID {payload.driver_id} not found.")
         
-        # 2. Generate prediction utilizing the machine learning layer or safe fallback math
+        # 2. Process ML prediction inference
         if model is not None:
             input_features = [[payload.distance_km, payload.traffic_density]]
             predicted_duration_mins = float(model.predict(input_features)[0])
@@ -118,8 +135,7 @@ def verify_predict_and_log_trip(payload: TripPayload):
             predicted_duration_mins = (payload.distance_km * 1.5) + (payload.traffic_density * 30.0)
             prediction_source = "Fallback Heuristic Baseline"
 
-        # 3. --- THE DAY 12 WRITE-BACK MECHANISM ---
-        # Insert the newly calculated log entry straight back into your MySQL database
+        # 3. Safe transaction write-back
         insert_query = """
             INSERT INTO trips (driver_id, distance_km, traffic_density, predicted_duration_minutes)
             VALUES (%s, %s, %s, %s)
@@ -127,7 +143,7 @@ def verify_predict_and_log_trip(payload: TripPayload):
         insert_values = (payload.driver_id, payload.distance_km, payload.traffic_density, round(predicted_duration_mins, 2))
         cursor.execute(insert_query, insert_values)
         
-        # Commit the transaction to disk so it saves permanently
+        # Save to disk
         connection.commit()
         new_trip_id = cursor.lastrowid
 
@@ -147,22 +163,26 @@ def verify_predict_and_log_trip(payload: TripPayload):
         }
         
     except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Database persistent transaction failure: {str(err)}")
+        # CRITICAL RESILIENCE RULE: If the write fails halfway through, roll back changes to avoid broken records
+        if connection:
+            connection.rollback()
+        raise HTTPException(status_code=500, detail=f"Database mid-transaction operational crash. Safe rollback triggered: {str(err)}")
     finally:
-        if 'connection' in locals() and connection.is_connected():
+        if cursor:
             cursor.close()
+        if connection and connection.is_connected():
             connection.close()
 
 
 @app.get("/api/v1/trips")
 def fetch_historical_trips(limit: int = 10):
-    try:
-        if limit > 100:
-            limit = 100
-        connection = get_db_connection()
-        cursor = connection.cursor(dictionary=True)
+    if limit > 100:
+        limit = 100
         
-        # Pull historical trips using our safe LEFT JOIN query
+    connection = get_db_connection()
+    cursor = None
+    try:
+        cursor = connection.cursor(dictionary=True)
         query = """
             SELECT t.trip_id, t.distance_km, t.traffic_density, t.predicted_duration_minutes, d.name AS driver_name 
             FROM trips t
@@ -174,8 +194,9 @@ def fetch_historical_trips(limit: int = 10):
         records = cursor.fetchall()
         return {"status": "success", "count": len(records), "data": records}
     except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Database read failure: {str(err)}")
+        raise HTTPException(status_code=500, detail=f"Database persistent read exception: {str(err)}")
     finally:
-        if 'connection' in locals() and connection.is_connected():
+        if cursor:
             cursor.close()
+        if connection and connection.is_connected():
             connection.close()
