@@ -1,42 +1,75 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 import mysql.connector
 import joblib
 import os
+import time
+import logging
 
-# Clean, explicit relative imports from our new module design
+# Clean relative imports from our module design
 from scripts.config import MODEL_PATH
 from scripts.schemas import TripPayload
 from scripts.database import get_db_connection, initialize_database_schemas
 
-app = FastAPI(title="Logi-Sort Enterprise Modular API Gateway - Day 14")
+# 1. Configure production file logger alongside terminal stream outputs
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("app.log", encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger("logi_sort_metrics")
 
+app = FastAPI(title="Logi-Sort Enterprise Monitored API Gateway - Day 17")
 model = None
 
 @app.on_event("startup")
 def startup_pipeline():
     """Prepares system sub-modules cleanly on boot."""
     global model
-    
-    # 1. Initialize self-healing database schemas
     initialize_database_schemas()
     
-    # 2. Load the Machine Learning engine
     try:
         if os.path.exists(MODEL_PATH):
             model = joblib.load(MODEL_PATH)
-            print("🧠 Success: Machine Learning prediction engine loaded into memory.")
+            logger.info("🧠 Success: Machine Learning prediction engine loaded into memory.")
         else:
-            print("⚠️ Warning: ml_model file not found. Running with mock estimation fallback.")
+            logger.warning("⚠️ Warning: ml_model file not found. Running with mock estimation fallback.")
     except Exception as e:
-        print(f"❌ Failed to load ML model: {str(e)}")
+        logger.error(f"❌ Failed to load ML model: {str(e)}")
+
+
+# 2. --- THE DAY 17 TIMING MIDDLEWARE CHECKPOINT ---
+@app.middleware("http")
+async def log_performance_telemetry(request: Request, call_next):
+    """Interceptors that measure the exact performance time of incoming API requests."""
+    start_time = time.time()
+    
+    # Pass the request down the pipeline to execute its database read/writes
+    response = await call_next(request)
+    
+    # Calculate exactly how many milliseconds the transaction took to execute
+    process_duration_ms = (time.time() - start_time) * 1000
+    
+    # Record structured diagnostic information
+    logger.info(
+        f"Route: {request.method} {request.url.path} | "
+        f"Status: {response.status_code} | "
+        f"Latency: {process_duration_ms:.2f}ms"
+    )
+    
+    # Inject the latency performance signature straight into the client header response
+    response.headers["X-Process-Latency-MS"] = f"{process_duration_ms:.2f}"
+    return response
 
 
 @app.get("/api/v1/health")
 def check_health():
     return {
         "status": "healthy",
-        "modular_architecture": True,
-        "milestone": "Day 14 Modular Clean Code Standards Achieved"
+        "performance_tracking": "active",
+        "milestone": "Day 17 Performance Interceptors Operational"
     }
 
 
@@ -47,14 +80,12 @@ def verify_predict_and_log_trip(payload: TripPayload):
     try:
         cursor = connection.cursor(dictionary=True)
         
-        # Validate driver profiles
         cursor.execute("SELECT * FROM drivers WHERE driver_id = %s", (payload.driver_id,))
         driver_record = cursor.fetchone()
         
         if not driver_record:
             raise HTTPException(status_code=404, detail=f"Driver ID {payload.driver_id} not found.")
         
-        # Dynamic AI routing prediction
         if model is not None:
             input_features = [[payload.distance_km, payload.traffic_density]]
             predicted_duration_mins = float(model.predict(input_features)[0])
@@ -63,7 +94,6 @@ def verify_predict_and_log_trip(payload: TripPayload):
             predicted_duration_mins = (payload.distance_km * 1.5) + (payload.traffic_density * 30.0)
             prediction_source = "Fallback Heuristic Baseline"
 
-        # Safe relational write-back execution
         insert_query = """
             INSERT INTO trips (driver_id, distance_km, traffic_density, predicted_duration_minutes)
             VALUES (%s, %s, %s, %s)
@@ -76,7 +106,7 @@ def verify_predict_and_log_trip(payload: TripPayload):
 
         return {
             "status": "synchronized",
-            "message": "Telemetry processed and logged via modular service pipeline.",
+            "message": "Telemetry processed and logged via monitored service pipeline.",
             "logged_trip_id": new_trip_id,
             "routing_metadata": {
                 "driver_name": driver_record.get("name"),
