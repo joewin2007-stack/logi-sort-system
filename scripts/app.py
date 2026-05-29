@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
 import joblib
 import os
@@ -10,7 +11,7 @@ from scripts.config import MODEL_PATH
 from scripts.schemas import TripPayload
 from scripts.database import get_db_connection, initialize_database_schemas
 
-# 1. Configure production file logger alongside terminal stream outputs
+# Configure production file logger alongside terminal stream outputs
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -21,7 +22,25 @@ logging.basicConfig(
 )
 logger = logging.getLogger("logi_sort_metrics")
 
-app = FastAPI(title="Logi-Sort Enterprise Monitored API Gateway - Day 17")
+app = FastAPI(title="Logi-Sort Enterprise Monitored API Gateway - Day 18")
+
+# 1. --- THE DAY 18 CORS SECURITY MATRIX ---
+# Define which origins/web addresses are allowed to call our logistics API
+ALLOWED_ORIGINS = [
+    "http://localhost:3000",      # Common React local development port
+    "http://localhost:5173",      # Common Vite/Vue local development port
+    "http://127.0.0.1:5500",      # VS Code Live Server extension port
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,      # Permits specific frontend domains
+    allow_credentials=True,             # Allows cookies and authentication tokens across origins
+    allow_methods=["GET", "POST"],      # Binds network actions to strictly required methods
+    allow_headers=["*"],                # Permits all standard client request headers
+    expose_headers=["X-Process-Latency-MS"] # Explicitly lets browsers read our Day 17 performance timer
+)
+
 model = None
 
 @app.on_event("startup")
@@ -40,26 +59,19 @@ def startup_pipeline():
         logger.error(f"❌ Failed to load ML model: {str(e)}")
 
 
-# 2. --- THE DAY 17 TIMING MIDDLEWARE CHECKPOINT ---
 @app.middleware("http")
 async def log_performance_telemetry(request: Request, call_next):
     """Interceptors that measure the exact performance time of incoming API requests."""
     start_time = time.time()
-    
-    # Pass the request down the pipeline to execute its database read/writes
     response = await call_next(request)
-    
-    # Calculate exactly how many milliseconds the transaction took to execute
     process_duration_ms = (time.time() - start_time) * 1000
     
-    # Record structured diagnostic information
     logger.info(
         f"Route: {request.method} {request.url.path} | "
         f"Status: {response.status_code} | "
         f"Latency: {process_duration_ms:.2f}ms"
     )
     
-    # Inject the latency performance signature straight into the client header response
     response.headers["X-Process-Latency-MS"] = f"{process_duration_ms:.2f}"
     return response
 
@@ -68,8 +80,8 @@ async def log_performance_telemetry(request: Request, call_next):
 def check_health():
     return {
         "status": "healthy",
-        "performance_tracking": "active",
-        "milestone": "Day 17 Performance Interceptors Operational"
+        "cors_policy": "enforced",
+        "milestone": "Day 18 Cross-Origin Resource Management Operational"
     }
 
 
