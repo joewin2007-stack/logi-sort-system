@@ -22,10 +22,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger("logi_sort_metrics")
 
-app = FastAPI(title="Logi-Sort Enterprise Monitored API Gateway - Day 18")
+app = FastAPI(title="Logi-Sort Enterprise Monitored API Gateway - Day 25")
 
-# 1. --- THE DAY 18 CORS SECURITY MATRIX ---
-# Define which origins/web addresses are allowed to call our logistics API
+# 1. --- THE CORS SECURITY MATRIX ---
 ALLOWED_ORIGINS = [
     "http://localhost:3000",      # Common React local development port
     "http://localhost:5173",      # Common Vite/Vue local development port
@@ -34,11 +33,11 @@ ALLOWED_ORIGINS = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,      # Permits specific frontend domains
-    allow_credentials=True,             # Allows cookies and authentication tokens across origins
-    allow_methods=["GET", "POST"],      # Binds network actions to strictly required methods
-    allow_headers=["*"],                # Permits all standard client request headers
-    expose_headers=["X-Process-Latency-MS"] # Explicitly lets browsers read our Day 17 performance timer
+    allow_origins=["*"],      
+    allow_credentials=True,             
+    allow_methods=["GET", "POST"],      
+    allow_headers=["*"],                
+    expose_headers=["X-Process-Latency-MS"] 
 )
 
 model = None
@@ -74,15 +73,6 @@ async def log_performance_telemetry(request: Request, call_next):
     
     response.headers["X-Process-Latency-MS"] = f"{process_duration_ms:.2f}"
     return response
-
-
-@app.get("/api/v1/health")
-def check_health():
-    return {
-        "status": "healthy",
-        "cors_policy": "enforced",
-        "milestone": "Day 18 Cross-Origin Resource Management Operational"
-    }
 
 
 @app.post("/api/v1/trips/verify")
@@ -142,24 +132,45 @@ def verify_predict_and_log_trip(payload: TripPayload):
 
 
 @app.get("/api/v1/trips")
-def fetch_historical_trips(limit: int = 10):
-    if limit > 100:
-        limit = 100
+def fetch_historical_trips(driver_id: int = None, limit: int = 8):
+    """Retrieves operational tracking ledger logs with microsecond B-Tree execution profiling."""
+    # Start the Day 25 precision database tracking clock
+    db_start_time = time.time()
         
     connection = get_db_connection()
     cursor = None
     try:
         cursor = connection.cursor(dictionary=True)
-        query = """
-            SELECT t.trip_id, t.distance_km, t.traffic_density, t.predicted_duration_minutes, d.name AS driver_name 
-            FROM trips t
-            LEFT JOIN drivers d ON t.driver_id = d.driver_id
-            ORDER BY t.trip_id DESC
-            LIMIT %s
-        """
-        cursor.execute(query, (limit,))
+        
+        # Build query conditionally to evaluate index performance optimizations
+        if driver_id:
+            query = """
+                SELECT t.trip_id, t.distance_km, t.traffic_density, t.predicted_duration_minutes, d.name AS driver_name 
+                FROM trips t
+                LEFT JOIN drivers d ON t.driver_id = d.driver_id
+                WHERE t.driver_id = %s
+                ORDER BY t.trip_id DESC
+                LIMIT %s
+            """
+            cursor.execute(query, (driver_id, limit))
+        else:
+            query = """
+                SELECT t.trip_id, t.distance_km, t.traffic_density, t.predicted_duration_minutes, d.name AS driver_name 
+                FROM trips t
+                LEFT JOIN drivers d ON t.driver_id = d.driver_id
+                ORDER BY t.trip_id DESC
+                LIMIT %s
+            """
+            cursor.execute(query, (limit,))
+            
         records = cursor.fetchall()
+        
+        # Calculate execution delta in milliseconds
+        db_duration_ms = (time.time() - db_start_time) * 1000
+        print(f"⚡ [PERFORMANCE DAY 25] Database fetch query execution latency: {db_duration_ms:.2f}ms")
+        
         return {"status": "success", "count": len(records), "data": records}
+        
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database read crash: {str(err)}")
     finally:
