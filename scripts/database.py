@@ -1,16 +1,20 @@
 import mysql.connector
 from fastapi import HTTPException, status
 from scripts.config import DB_CONFIG
+import os  # <-- Add this import at the top if it isn't there
+from dotenv import load_dotenv  # <-- Add this import at the top
+
+load_dotenv()  # <-- Load environment variables from .env file
 
 def get_db_connection():
-    """Attempts to establish a safe database channel link; handles offline exceptions cleanly."""
-    try:
-        return mysql.connector.connect(**DB_CONFIG)
-    except mysql.connector.Error as err:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=f"Database warehouse layer is completely offline: {str(err)}"
-        )
+    """Generates a dynamic database connection pulling parameters directly from environment variable pools."""
+    return mysql.connector.connect(
+        host=os.getenv("DB_HOST", "localhost"),
+        user=os.getenv("DB_USER", "root"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME", "logi_sort"),
+        port=int(os.getenv("DB_PORT", 3306))
+    )
 
 def initialize_database_schemas():
     """Self-healing setup routine to safely prepare missing database tables on startup."""
