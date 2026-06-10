@@ -133,16 +133,15 @@ def verify_predict_and_log_trip(payload: TripPayload):
 
 @app.get("/api/v1/trips")
 def fetch_historical_trips(driver_id: int = None, limit: int = 8):
-    """Retrieves operational tracking ledger logs with microsecond B-Tree execution profiling."""
-    # Start the Day 25 precision database tracking clock
+    """Retrieves operational tracking ledger logs with robust microsecond logging and telemetry auditing."""
     db_start_time = time.time()
+    logger.info(f"🔍 Fetch historical trips triggered. Filter driver_id: {driver_id}, limit: {limit}")
         
     connection = get_db_connection()
     cursor = None
     try:
         cursor = connection.cursor(dictionary=True)
         
-        # Build query conditionally to evaluate index performance optimizations
         if driver_id:
             query = """
                 SELECT t.trip_id, t.distance_km, t.traffic_density, t.predicted_duration_minutes, d.name AS driver_name 
@@ -165,14 +164,15 @@ def fetch_historical_trips(driver_id: int = None, limit: int = 8):
             
         records = cursor.fetchall()
         
-        # Calculate execution delta in milliseconds
         db_duration_ms = (time.time() - db_start_time) * 1000
-        print(f"⚡ [PERFORMANCE DAY 25] Database fetch query execution latency: {db_duration_ms:.2f}ms")
+        logger.info(f"⚡ [PERFORMANCE] Database fetch query executed in {db_duration_ms:.2f}ms. Rows returned: {len(records)}")
         
         return {"status": "success", "count": len(records), "data": records}
         
     except mysql.connector.Error as err:
-        raise HTTPException(status_code=500, detail=f"Database read crash: {str(err)}")
+        # Capture the raw trace safely into the persistent app.log file
+        logger.error(f"❌ DATABASE READ CRASH: Critical failure fetching trip records. Raw SQL Exception: {str(err)}")
+        raise HTTPException(status_code=500, detail="Internal Logistics Ledger database operational read error.")
     finally:
         if cursor:
             cursor.close()
