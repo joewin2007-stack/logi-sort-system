@@ -126,3 +126,181 @@
 2026-06-01 15:15:36,807 [INFO] Route: GET /docs | Status: 200 | Latency: 2.66ms
 2026-06-01 15:15:41,908 [INFO] Route: GET /openapi.json | Status: 200 | Latency: 50.05ms
 2026-06-01 15:17:16,085 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 64.99ms
+2026-06-03 16:21:33,349 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-03 16:23:24,809 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 84.28ms
+2026-06-03 16:23:37,114 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 400 | Latency: 0.85ms
+2026-06-03 16:23:58,193 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 400 | Latency: 0.70ms
+2026-06-03 16:29:09,977 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-03 16:29:27,380 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 47.34ms
+2026-06-03 16:29:28,529 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 3.42ms
+2026-06-03 16:29:28,625 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 87.13ms
+2026-06-03 16:29:28,656 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 24.10ms
+2026-06-03 16:31:55,175 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 25.65ms
+2026-06-03 16:31:56,990 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.75ms
+2026-06-03 16:31:57,051 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 45.33ms
+2026-06-03 16:31:57,080 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.76ms
+2026-06-03 16:32:13,796 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 25.58ms
+2026-06-03 16:32:15,719 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.73ms
+2026-06-03 16:32:15,775 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 47.17ms
+2026-06-03 16:32:15,822 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 36.57ms
+2026-06-03 16:32:26,461 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 37.35ms
+2026-06-03 16:32:28,287 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 49.96ms
+2026-06-03 16:32:28,812 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 49.86ms
+2026-06-03 16:32:29,675 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 47.70ms
+2026-06-03 16:32:44,590 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.76ms
+2026-06-03 16:32:44,651 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 51.91ms
+2026-06-03 16:32:44,687 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 28.20ms
+2026-06-03 16:32:46,039 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.77ms
+2026-06-03 16:32:46,093 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 41.82ms
+2026-06-03 16:32:46,125 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 26.17ms
+2026-06-03 16:32:49,029 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 48.64ms
+2026-06-03 16:34:02,932 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 53.25ms
+2026-06-03 16:34:04,179 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 44.64ms
+2026-06-03 16:34:04,778 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 46.96ms
+2026-06-03 16:34:05,516 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 52.75ms
+2026-06-03 16:36:08,350 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 24.97ms
+2026-06-03 16:36:16,815 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.55ms
+2026-06-03 16:36:16,870 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 48.33ms
+2026-06-03 16:36:16,904 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 26.54ms
+2026-06-03 16:36:29,822 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 52.96ms
+2026-06-03 16:36:31,101 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 40.70ms
+2026-06-04 15:36:31,766 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-04 15:36:37,721 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 99.09ms
+2026-06-04 15:36:46,026 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 25.38ms
+2026-06-04 15:36:48,139 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 1.25ms
+2026-06-04 15:36:48,227 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 75.22ms
+2026-06-04 15:36:48,271 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 36.10ms
+2026-06-04 15:37:00,220 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 37.37ms
+2026-06-04 15:37:02,142 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 38.64ms
+2026-06-04 15:39:04,305 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 24.92ms
+2026-06-04 15:39:29,433 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.81ms
+2026-06-04 15:39:29,496 [INFO] Route: POST /api/v1/trips/verify | Status: 404 | Latency: 55.52ms
+2026-06-04 15:39:53,518 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.84ms
+2026-06-04 15:39:53,601 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 68.17ms
+2026-06-04 15:39:53,631 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.59ms
+2026-06-04 15:40:01,544 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 40.61ms
+2026-06-04 15:40:03,573 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 40.23ms
+2026-06-04 15:40:06,517 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 46.00ms
+2026-06-04 15:40:06,951 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 32.00ms
+2026-06-04 15:40:09,681 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 1.27ms
+2026-06-04 15:40:09,746 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 55.71ms
+2026-06-04 15:40:09,786 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.93ms
+2026-06-04 15:40:10,284 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.82ms
+2026-06-04 15:40:10,354 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 62.12ms
+2026-06-04 15:40:10,391 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 31.26ms
+2026-06-04 15:40:10,651 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 1.55ms
+2026-06-04 15:40:10,725 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 64.22ms
+2026-06-04 15:40:10,756 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.97ms
+2026-06-04 15:40:10,774 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 2.14ms
+2026-06-04 15:40:10,816 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 34.89ms
+2026-06-04 15:40:10,840 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 17.96ms
+2026-06-04 15:40:37,857 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 34.77ms
+2026-06-04 15:40:38,482 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 34.12ms
+2026-06-04 15:40:38,907 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 43.79ms
+2026-06-05 15:38:05,824 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-05 15:38:09,753 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 83.06ms
+2026-06-05 15:38:12,292 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.83ms
+2026-06-05 15:38:12,366 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 65.30ms
+2026-06-05 15:38:12,411 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 34.01ms
+2026-06-05 15:44:25,316 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.85ms
+2026-06-05 15:44:25,358 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 36.69ms
+2026-06-05 15:44:25,390 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 25.47ms
+2026-06-05 15:44:50,266 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.61ms
+2026-06-05 15:44:50,321 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 50.48ms
+2026-06-05 15:44:50,351 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.72ms
+2026-06-05 15:45:21,174 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 26.28ms
+2026-06-05 15:45:22,125 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 38.55ms
+2026-06-05 15:45:33,866 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.77ms
+2026-06-05 15:45:33,921 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 45.73ms
+2026-06-05 15:45:33,963 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.70ms
+2026-06-05 15:45:48,052 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.77ms
+2026-06-05 15:45:48,129 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 66.02ms
+2026-06-05 15:45:48,167 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 30.77ms
+2026-06-05 15:45:55,477 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.82ms
+2026-06-05 15:45:55,546 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 60.27ms
+2026-06-05 15:45:55,595 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 34.52ms
+2026-06-05 15:46:07,981 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 1.80ms
+2026-06-05 15:46:08,047 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 54.47ms
+2026-06-05 15:46:08,079 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 25.56ms
+2026-06-05 15:46:08,721 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.71ms
+2026-06-05 15:46:08,794 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 64.63ms
+2026-06-05 15:46:08,836 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 33.96ms
+2026-06-05 15:46:10,399 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.74ms
+2026-06-05 15:46:10,460 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 53.84ms
+2026-06-05 15:46:10,501 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 32.05ms
+2026-06-05 15:46:37,246 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.97ms
+2026-06-05 15:46:37,322 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 59.99ms
+2026-06-05 15:46:37,361 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 30.92ms
+2026-06-05 15:47:06,243 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 24.26ms
+2026-06-05 15:49:16,542 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 1.07ms
+2026-06-05 15:49:16,632 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 80.42ms
+2026-06-05 15:49:16,683 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 42.97ms
+2026-06-05 15:49:21,878 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.57ms
+2026-06-05 15:51:13,931 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 43.86ms
+2026-06-05 15:51:15,890 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.89ms
+2026-06-05 15:51:15,947 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 43.20ms
+2026-06-05 15:51:15,984 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.75ms
+2026-06-05 15:51:45,887 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.87ms
+2026-06-05 15:51:45,948 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 50.01ms
+2026-06-05 15:51:45,985 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.38ms
+2026-06-05 16:05:54,024 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 39.42ms
+2026-06-05 16:05:54,353 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 32.08ms
+2026-06-05 16:05:59,908 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.65ms
+2026-06-05 16:05:59,959 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 44.92ms
+2026-06-05 16:05:59,991 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 25.01ms
+2026-06-05 16:06:03,422 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.96ms
+2026-06-05 16:06:03,482 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 51.26ms
+2026-06-05 16:06:03,521 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 30.43ms
+2026-06-05 16:06:08,967 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.71ms
+2026-06-05 16:06:09,035 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 58.37ms
+2026-06-05 16:06:09,077 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 34.82ms
+2026-06-05 16:06:10,174 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 1.25ms
+2026-06-05 16:06:10,270 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 86.71ms
+2026-06-05 16:06:10,318 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 35.10ms
+2026-06-05 16:06:16,132 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.74ms
+2026-06-05 16:06:16,216 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 73.93ms
+2026-06-05 16:06:16,247 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.62ms
+2026-06-06 20:37:48,260 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-06 20:38:25,433 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 37.64ms
+2026-06-06 20:38:29,334 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 20.34ms
+2026-06-06 20:38:44,177 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 46.08ms
+2026-06-06 20:38:45,418 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 47.46ms
+2026-06-06 20:38:50,822 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.78ms
+2026-06-06 20:38:50,891 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 58.44ms
+2026-06-06 20:38:50,931 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 32.45ms
+2026-06-06 20:38:55,191 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 40.36ms
+2026-06-06 20:38:55,932 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 35.58ms
+2026-06-08 15:26:14,493 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-08 15:26:49,100 [INFO] Route: GET /docs | Status: 200 | Latency: 2.00ms
+2026-06-08 15:26:50,122 [INFO] Route: GET /openapi.json | Status: 200 | Latency: 63.65ms
+2026-06-08 15:27:33,026 [INFO] Route: POST /api/v1/trips/verify | Status: 422 | Latency: 12.94ms
+2026-06-08 15:28:01,606 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-08 15:28:07,682 [INFO] Route: GET /docs | Status: 200 | Latency: 1.67ms
+2026-06-08 15:28:07,953 [INFO] Route: GET /openapi.json | Status: 200 | Latency: 53.65ms
+2026-06-08 15:28:24,810 [INFO] Route: POST /api/v1/trips/verify | Status: 422 | Latency: 12.31ms
+2026-06-09 14:57:26,708 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-09 15:00:08,018 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 187.92ms
+2026-06-09 15:00:10,538 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.16ms
+2026-06-09 15:00:11,687 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.76ms
+2026-06-09 15:00:12,610 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 29.14ms
+2026-06-09 15:00:17,131 [INFO] Route: OPTIONS /api/v1/trips/verify | Status: 200 | Latency: 0.84ms
+2026-06-09 15:00:17,198 [INFO] Route: POST /api/v1/trips/verify | Status: 200 | Latency: 60.52ms
+2026-06-09 15:00:17,233 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 28.66ms
+2026-06-09 15:00:34,899 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 23.88ms
+2026-06-09 15:00:39,748 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 37.66ms
+2026-06-10 14:56:18,823 [WARNING] ⚠️ Warning: ml_model file not found. Running with mock estimation fallback.
+2026-06-10 14:58:44,675 [INFO] 🔍 Fetch historical trips triggered. Filter driver_id: None, limit: 8
+2026-06-10 14:58:44,841 [INFO] ⚡ [PERFORMANCE] Database fetch query executed in 165.50ms. Rows returned: 8
+2026-06-10 14:58:44,862 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 245.47ms
+2026-06-10 14:58:47,553 [INFO] 🔍 Fetch historical trips triggered. Filter driver_id: None, limit: 8
+2026-06-10 14:58:47,582 [INFO] ⚡ [PERFORMANCE] Database fetch query executed in 28.95ms. Rows returned: 8
+2026-06-10 14:58:47,585 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 33.58ms
+2026-06-10 14:58:48,496 [INFO] 🔍 Fetch historical trips triggered. Filter driver_id: None, limit: 8
+2026-06-10 14:58:48,537 [INFO] ⚡ [PERFORMANCE] Database fetch query executed in 41.07ms. Rows returned: 8
+2026-06-10 14:58:48,540 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 45.01ms
+2026-06-10 14:58:50,145 [INFO] 🔍 Fetch historical trips triggered. Filter driver_id: None, limit: 8
+2026-06-10 14:58:50,166 [INFO] ⚡ [PERFORMANCE] Database fetch query executed in 20.74ms. Rows returned: 8
+2026-06-10 14:58:50,168 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 24.42ms
+2026-06-10 14:58:55,490 [INFO] 🔍 Fetch historical trips triggered. Filter driver_id: None, limit: 8
+2026-06-10 14:58:55,524 [INFO] ⚡ [PERFORMANCE] Database fetch query executed in 34.34ms. Rows returned: 8
+2026-06-10 14:58:55,526 [INFO] Route: GET /api/v1/trips | Status: 200 | Latency: 38.07ms
